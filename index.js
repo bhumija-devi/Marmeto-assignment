@@ -113,7 +113,7 @@ function createAndAppendItem(cardDetails) {
   const discountPrice = Math.round((discountPercentage * 100) / 100);
 
   var discount = document.createElement("p");
-  discount.textContent = `${discountPrice}%`;
+  discount.textContent = `${discountPrice}% Off`;
   discount.classList.add("discount");
   priceCon.appendChild(discount);
 
