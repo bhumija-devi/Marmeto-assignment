@@ -3,6 +3,8 @@ const menBtn = document.getElementById("Men");
 const womenBtn = document.getElementById("Women");
 const kidsBtn = document.getElementById("Kids");
 
+
+
 const state = {
   category: "Men",
   data: [],
@@ -57,10 +59,10 @@ function updateState(currentCategory) {
 
 async function handleButtonClick(event) {
   const currentCategory = event.target.value;
-  const prevbtn = document.getElementById(state.category);
-  prevbtn.style.backgroundColor = "black";
   const btn = document.getElementById(currentCategory);
-  btn.style.backgroundColor = "green";
+  const prevBtn = document.getElementById(state.category)
+  prevBtn.classList.remove('active')
+  btn.classList.add('active')
   removePrevCat(state.category);
   updateState(currentCategory);
   app();
@@ -129,7 +131,7 @@ const app = async () => {
   const fetchResponse = await fetchData(state.category);
   state.data = fetchResponse;
   const btn = document.getElementById(state.category);
-  btn.style.backgroundColor = "green";
+  btn.classList.add("active");
 
   menBtn.addEventListener("click", handleButtonClick);
   womenBtn.addEventListener("click", handleButtonClick);
