@@ -3,8 +3,6 @@ const menBtn = document.getElementById("Men");
 const womenBtn = document.getElementById("Women");
 const kidsBtn = document.getElementById("Kids");
 
-
-
 const state = {
   category: "Men",
   data: [],
@@ -49,6 +47,7 @@ function removePrevCat(category) {
 
   data.map((each) => {
     const childElement = document.getElementById(each.id);
+    console.log(childElement)
     itemsContainer.removeChild(childElement);
   });
 }
@@ -58,15 +57,19 @@ function updateState(currentCategory) {
 }
 
 async function handleButtonClick(event) {
+  var appCon = document.getElementById('appCon')
+  appCon.appendChild(itemsContainer);
   const currentCategory = event.target.value;
   const btn = document.getElementById(currentCategory);
-  const prevBtn = document.getElementById(state.category)
-  prevBtn.classList.remove('active')
-  btn.classList.add('active')
+  const prevBtn = document.getElementById(state.category);
+  prevBtn.classList.remove("active");
+  btn.classList.add("active");
   removePrevCat(state.category);
   updateState(currentCategory);
   app();
 }
+
+
 
 function createAndAppendItem(cardDetails) {
   var listItem = document.createElement("li");
@@ -74,11 +77,22 @@ function createAndAppendItem(cardDetails) {
   listItem.classList.add("item-card");
   itemsContainer.appendChild(listItem);
 
+  var imageCon = document.createElement('div');
+  imageCon.classList.add('container')
+
+  var textCon = document.createElement('div')
+  textCon.classList.add('text-overlay')
+  textCon.style.backgroundColor = 'black'
+  textCon.textContent = cardDetails.badgeText
+
   var imgElement = document.createElement("img");
   imgElement.src = cardDetails.image;
   imgElement.alt = cardDetails.title;
   imgElement.classList.add("image-edit");
-  listItem.appendChild(imgElement);
+  imageCon.appendChild(imgElement);
+  imageCon.appendChild(textCon);
+  listItem.appendChild(imageCon);
+  
 
   var titleBrandCon = document.createElement("div");
   titleBrandCon.classList.add("title-brand-con");
@@ -123,9 +137,9 @@ function createAndAppendItem(cardDetails) {
   buyBtn.type = "button";
   buyBtn.textContent = "Add To Cart";
   buyBtn.classList.add("add-to-cart-btn");
+
   listItem.appendChild(buyBtn);
 }
-
 
 const app = async () => {
   const fetchResponse = await fetchData(state.category);
